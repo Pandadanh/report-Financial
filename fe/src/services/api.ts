@@ -1,11 +1,14 @@
 import axios, { AxiosError } from 'axios';
-import { API_CONFIG } from '../config/api';
 
-const api = axios.create({
-  baseURL: API_CONFIG.baseURL,
-  timeout: API_CONFIG.timeout,
-  headers: API_CONFIG.headers,
-});
+const API_CONFIG = {
+  baseURL: '/api',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+
+const api = axios.create(API_CONFIG);
 
 interface ErrorResponse {
   message: string;
@@ -45,7 +48,7 @@ export interface FinancialSummary {
 export const apiService = {
   getEmails: async () => {
     try {
-      const response = await api.get<Email[]>('/api/emails');
+      const response = await api.get<Email[]>('/emails');
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -54,7 +57,7 @@ export const apiService = {
 
   getEmail: async (id: number) => {
     try {
-      const response = await api.get<Email>(`/api/emails/${id}`);
+      const response = await api.get<Email>(`/emails/${id}`);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -63,7 +66,7 @@ export const apiService = {
 
   createEmail: async (data: Omit<Email, 'id' | 'createdAt' | 'isRead'>) => {
     try {
-      const response = await api.post<Email>('/api/emails', data);
+      const response = await api.post<Email>('/emails', data);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -72,7 +75,7 @@ export const apiService = {
 
   updateEmail: async (id: number, data: Partial<Email>) => {
     try {
-      const response = await api.put<Email>(`/api/emails/${id}`, data);
+      const response = await api.put<Email>(`/emails/${id}`, data);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -81,7 +84,7 @@ export const apiService = {
 
   deleteEmail: async (id: number) => {
     try {
-      const response = await api.delete(`/api/emails/${id}`);
+      const response = await api.delete(`/emails/${id}`);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -90,7 +93,7 @@ export const apiService = {
 
   getFinancialSummary: async () => {
     try {
-      const response = await api.get<FinancialSummary>('/api/financial-summary');
+      const response = await api.get<FinancialSummary>('/financial-summary');
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
