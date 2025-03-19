@@ -1,10 +1,12 @@
 import axios, { AxiosError } from 'axios';
 
 const API_CONFIG = {
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
+  withCredentials: true,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   }
 };
 
@@ -48,7 +50,7 @@ export interface FinancialSummary {
 export const apiService = {
   getEmails: async () => {
     try {
-      const response = await api.get<Email[]>('/emails');
+      const response = await api.get<Email[]>('/api/emails');
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -57,7 +59,7 @@ export const apiService = {
 
   getEmail: async (id: number) => {
     try {
-      const response = await api.get<Email>(`/emails/${id}`);
+      const response = await api.get<Email>(`/api/emails/${id}`);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -66,7 +68,7 @@ export const apiService = {
 
   createEmail: async (data: Omit<Email, 'id' | 'createdAt' | 'isRead'>) => {
     try {
-      const response = await api.post<Email>('/emails', data);
+      const response = await api.post<Email>('/api/emails', data);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -75,7 +77,7 @@ export const apiService = {
 
   updateEmail: async (id: number, data: Partial<Email>) => {
     try {
-      const response = await api.put<Email>(`/emails/${id}`, data);
+      const response = await api.put<Email>(`/api/emails/${id}`, data);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -84,7 +86,7 @@ export const apiService = {
 
   deleteEmail: async (id: number) => {
     try {
-      const response = await api.delete(`/emails/${id}`);
+      const response = await api.delete(`/api/emails/${id}`);
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
@@ -93,7 +95,7 @@ export const apiService = {
 
   getFinancialSummary: async () => {
     try {
-      const response = await api.get<FinancialSummary>('/financial-summary');
+      const response = await api.get<FinancialSummary>('/api/financial-summary');
       return response;
     } catch (error) {
       handleError(error as AxiosError<ErrorResponse>);
