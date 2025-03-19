@@ -5,7 +5,7 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/PersonalFinancialManagement/ui-report/fe/',
+  base: '/ui-report-fe/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
