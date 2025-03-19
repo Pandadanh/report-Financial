@@ -1,0 +1,33 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Email {
+    id        Int      @id @default(autoincrement())
+    emailId   String   @unique
+    expense   String
+    createdAt DateTime @default(now())
+    month     Int
+    price     Float
+    isRead    Boolean  @default(false)
+    category  String   @default("Others")
+    note      String?
+
+    @@map("Email")
+}
+
+model OAuthToken {
+    id           String   @id
+    accessToken  String
+    refreshToken String
+    expiryDate   DateTime
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("OAuthToken")
+}
