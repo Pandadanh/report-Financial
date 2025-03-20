@@ -4,9 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/report-Financial/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Financial Report</title>
+    <title>Report Financial</title>
     <base href="/report-Financial/" />
-    <script type="module" crossorigin src="/report-Financial/assets/index-BiPTNtXo.js"></script>
+    <script type="text/javascript">
+      // Handle direct navigation to routes
+      if (
+        window.location.pathname.includes('/report-Financial/') &&
+        !window.location.hash &&
+        window.location.pathname !== '/report-Financial/'
+      ) {
+        var path = window.location.pathname.split('/report-Financial/')[1];
+        window.location.replace('/report-Financial/#/' + path);
+      }
+    </script>
+    <script type="module" crossorigin src="/report-Financial/assets/index-BQvSzVE2.js"></script>
     <link rel="stylesheet" crossorigin href="/report-Financial/assets/index-Dtn62Xmo.css">
   </head>
   <body>
