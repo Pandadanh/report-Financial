@@ -6,10 +6,11 @@ async function bootstrap() {
   
   // Enable CORS with configuration from environment variables
   app.enableCors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Accept', 'Authorization', 'ngrok-skip-browser-warning'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range']
   });
 
   const port = process.env.PORT || 3000;
