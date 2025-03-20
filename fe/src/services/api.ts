@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 const API_CONFIG = {
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
-  withCredentials: true,
+  withCredentials: false,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'

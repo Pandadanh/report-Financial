@@ -5,7 +5,7 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/report-Financial/',
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -17,31 +17,25 @@ export default defineConfig({
     sourcemap: true
   },
   server: {
-    host: true,
+    host: '0.0.0.0',
     port: 5173,
-    allowedHosts: [
-      'localhost',
-      '127.0.0.1',
-      '.ngrok-free.app'
-    ],
-    cors: true,
+    allowedHosts: 'all',
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      credentials: true
+    },
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: process.env.VITE_API_BASE_URL || 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
-        configure: (proxy) => {
-          proxy.on('error', (err) => {
-            console.log('proxy error', err);
-          });
-          proxy.on('proxyReq', (proxyReq, req) => {
-            console.log('Sending Request to the Target:', req.method, req.url);
-          });
-          proxy.on('proxyRes', (proxyRes, req) => {
-            console.log('Received Response from the Target:', proxyRes.statusCode, req.url);
-          });
-        }
-      }
+        ws: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    },
+    hmr: {
+      clientPort: 443
     }
   }
 })
